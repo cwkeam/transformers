@@ -142,10 +142,12 @@ class Speech2TextFeatureExtractionTest(SequenceFeatureExtractionTestMixin, unitt
         speech_inputs = [floats_list((1, x))[0] for x in range(800, 1400, 200)]
 
         paddings = ["longest", "max_length", "do_not_pad"]
-        max_lengths = [None, 16, None]
+        max_lengths = [None, 4, None]
         for max_length, padding in zip(max_lengths, paddings):
+            do_truncation = max_length is not None
             inputs = feature_extractor(
-                speech_inputs, padding=padding, max_length=max_length, return_attention_mask=True
+                speech_inputs, padding=padding, max_length=max_length, 
+                return_attention_mask=True, truncation=do_truncation
             )
             input_features = inputs.input_features
             attention_mask = inputs.attention_mask
@@ -160,10 +162,12 @@ class Speech2TextFeatureExtractionTest(SequenceFeatureExtractionTestMixin, unitt
         speech_inputs = [floats_list((1, x))[0] for x in range(800, 1400, 200)]
 
         paddings = ["longest", "max_length", "do_not_pad"]
-        max_lengths = [None, 16, None]
+        max_lengths = [None, 4, None]
         for max_length, padding in zip(max_lengths, paddings):
+            do_truncation = max_length is not None
             inputs = feature_extractor(
-                speech_inputs, max_length=max_length, padding=padding, return_tensors="np", return_attention_mask=True
+                speech_inputs, max_length=max_length, padding=padding, return_tensors="np", 
+                return_attention_mask=True, truncation=do_truncation
             )
             input_features = inputs.input_features
             attention_mask = inputs.attention_mask

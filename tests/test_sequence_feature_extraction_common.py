@@ -132,7 +132,7 @@ class SequenceFeatureExtractionTestMixin(FeatureExtractionSavingTestMixin):
         input_2 = feat_extract.pad(processed_features, padding="longest")
         input_2 = input_2[input_name]
 
-        input_3 = feat_extract.pad(processed_features, padding="max_length", max_length=len(speech_inputs[-1]))
+        input_3 = feat_extract.pad(processed_features, padding="max_length", max_length=len(speech_inputs[-1]), truncation=True)
         input_3 = input_3[input_name]
 
         input_4 = feat_extract.pad(processed_features, padding="longest", return_tensors="np")
@@ -140,10 +140,11 @@ class SequenceFeatureExtractionTestMixin(FeatureExtractionSavingTestMixin):
 
         # max_length parameter has to be provided when setting `padding="max_length"`
         with self.assertRaises(ValueError):
-            feat_extract.pad(processed_features, padding="max_length")[input_name]
+            feat_extract.pad(processed_features, padding="max_length", truncation=True)[input_name]
 
         input_5 = feat_extract.pad(
-            processed_features, padding="max_length", max_length=pad_max_length, return_tensors="np"
+            processed_features, padding="max_length", max_length=pad_max_length, 
+            return_tensors="np", truncation=True
         )
         input_5 = input_5[input_name]
 
@@ -167,7 +168,7 @@ class SequenceFeatureExtractionTestMixin(FeatureExtractionSavingTestMixin):
         input_7 = input_7[input_name]
 
         input_8 = feat_extract.pad(
-            processed_features, padding="max_length", pad_to_multiple_of=10, max_length=pad_max_length
+            processed_features, padding="max_length", pad_to_multiple_of=10, max_length=pad_max_length, truncation=True
         )
         input_8 = input_8[input_name]
 
@@ -176,6 +177,7 @@ class SequenceFeatureExtractionTestMixin(FeatureExtractionSavingTestMixin):
             padding="max_length",
             pad_to_multiple_of=10,
             max_length=pad_max_length,
+            truncation=True,
             return_tensors="np",
         )
         input_9 = input_9[input_name]
@@ -247,7 +249,7 @@ class SequenceFeatureExtractionTestMixin(FeatureExtractionSavingTestMixin):
         )
         input_1 = input_1[input_name]
 
-        input_2 = feat_extract.pad(processed_features, padding="max_length", max_length=len(speech_inputs[0]))
+        input_2 = feat_extract.pad(processed_features, padding="max_length", max_length=len(speech_inputs[0]), truncation=True)
         input_2 = input_2[input_name]
 
         self.assertTrue(_inputs_have_equal_length(input_1))
@@ -264,7 +266,7 @@ class SequenceFeatureExtractionTestMixin(FeatureExtractionSavingTestMixin):
         input_3 = input_3[input_name]
 
         input_4 = feat_extract.pad(
-            processed_features, padding="max_length", max_length=len(speech_inputs[0]), return_tensors="np"
+            processed_features, padding="max_length", max_length=len(speech_inputs[0]), truncation=True, return_tensors="np"
         )
         input_4 = input_4[input_name]
 
@@ -291,7 +293,7 @@ class SequenceFeatureExtractionTestMixin(FeatureExtractionSavingTestMixin):
         input_6 = input_6[input_name]
 
         input_7 = feat_extract.pad(
-            processed_features, padding="max_length", max_length=len(speech_inputs[1]), return_tensors="np"
+            processed_features, padding="max_length", max_length=len(speech_inputs[1]), truncation=True, return_tensors="np"
         )
         input_7 = input_7[input_name]
 

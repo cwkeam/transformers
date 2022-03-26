@@ -77,6 +77,7 @@ class BatchFeature(UserDict):
 
     def __init__(self, data: Optional[Dict[str, Any]] = None, tensor_type: Union[None, str, TensorType] = None):
         super().__init__(data)
+        
         self.convert_to_tensors(tensor_type=tensor_type)
 
     def __getitem__(self, item: str) -> Union[Any]:

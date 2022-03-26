@@ -135,6 +135,11 @@ class SequenceFeatureExtractor(FeatureExtractionMixin):
             processed_features = {
                 key: [example[key] for example in processed_features] for key in processed_features[0].keys()
             }
+        
+        if truncation is False and max_length is not None:
+            raise ValueError(
+                "If `max_length` is provided, `trunction` must be True."
+            )
 
         # The model's main input name, usually `input_values`, has be passed for padding
         if self.model_input_names[0] not in processed_features:
