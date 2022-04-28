@@ -164,3 +164,9 @@ tags
 
 # DS_Store (MacOS)
 .DS_Store
+
+# MCTC Debugging Leftovers
+*.arr
+src/audio
+*.pkl
+*.bin
